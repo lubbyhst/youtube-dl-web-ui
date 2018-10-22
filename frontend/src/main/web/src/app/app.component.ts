@@ -1,0 +1,25 @@
+import { Component } from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'youtube-dl-web-ui';
+  constructor(private http: HttpClient){
+  }
+
+  ngOnInit(): void {
+    this.http.get('http://localhost:8080/helloWorld').subscribe(data => {
+      console.log(data);
+    });
+  }
+
+  onClickMe(): void{
+    this.http.get('http://localhost:8080/helloWorld').subscribe(data => {
+      console.log(data);
+    });
+  }
+}
