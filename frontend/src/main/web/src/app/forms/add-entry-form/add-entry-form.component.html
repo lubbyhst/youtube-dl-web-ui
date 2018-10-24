@@ -1,0 +1,16 @@
+<div class="container">
+  <h3>Add to download queue:</h3>
+  <form (ngSubmit)="onSubmit(); addEntryForm.reset()"
+        #addEntryForm="ngForm"
+        >
+    <div class="form-group">
+      <label for="yt-url">Youtube url or ID:</label>
+      <input type="text" class="form-control" id="yt-url"
+             required
+             [(ngModel)]="inputValue" name="yt-url" #name="ngModel">
+      <div [hidden]="name.valid || name.pristine"
+      class="alert alert-danger">URL or ID is required</div>
+    </div>
+    <button type="submit" class="btn btn-success" [disabled]="!addEntryForm.form.valid" >Add to queue</button>
+  </form>
+</div>
