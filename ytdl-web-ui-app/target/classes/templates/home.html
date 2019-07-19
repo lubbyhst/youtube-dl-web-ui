@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Youtube-DL web ui</title>
+    <link rel="stylesheet" th:href="@{/public/css/main.css}"/>
+<!--    <link rel="stylesheet" th:href="@{/public/css/4.3.1_bootstrap.min.css}">-->
+</head>
+<body>
+<!--<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">-->
+<!--    <a class="navbar-brand" href="#">Home</a>-->
+<!--</nav>-->
+
+<main class="container" role="main">
+
+    <h1>Youtube-dl web ui</h1>
+
+    <form action="/" role="form" th:action="@{/home/addEntry}" th:object="${entry}" method="post">
+        <div>
+            <input type="text" th:field="*{url}" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"/>
+            <button type="submit" th:text="'▶'" />
+        </div>
+    </form>
+
+    <ol>
+        <li th:each="entry: ${entries}" th:text="${entry.url}"/>
+    </ol>
+</main>
+
+<!--<script th:src="@{/public/js/jquery-3.3.1-min.js}" type="text/javascript"></script>-->
+<!--<script th:src="@{/public/js/popper-min.js}" type="text/javascript"></script>-->
+<!--<script th:src="@{/public/js/bootstrap-min.js}" type="text/javascript"></script>-->
+
+</body>
+</html>

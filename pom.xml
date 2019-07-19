@@ -4,14 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.hst.lubby</groupId>
-    <artifactId>youtube-dl-web-ui</artifactId>
+    <artifactId>ytdl-web-ui-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <modules>
-        <module>applicaton</module>
+        <module>ytdl-web-ui-app</module>
     </modules>
     <packaging>pom</packaging>
 
-    <name>youtube-dl-web-ui</name>
+    <name>parent</name>
     <description>Web UI for youtube-dl application</description>
 
     <parent>
