@@ -17,14 +17,18 @@
 
     <form action="/" role="form" th:action="@{/home/addEntry}" th:object="${entry}" method="post">
         <div>
-            <input type="text" th:field="*{url}" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"/>
-            <button type="submit" th:text="'▶'" />
+            <input type="text" th:field="*{ytUrl}" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"/>
+            <button class="button_start_download" type="submit" th:text="'▶'" />
         </div>
     </form>
 
-    <ol>
-        <li th:each="entry: ${entries}" th:text="${entry.url}"/>
-    </ol>
+    <ul class="downloadList">
+        <li class="downloadList__item" th:each="entry: ${entries}">
+            <span th:text="${entry.ytUrl}"/>
+            <p th:text="${entry.progress}"/>
+            <button th:if="${entry.finished and entry.progress > 99}" th:text="Download" type="submit" th:value="${entry.fileUri}"/>
+        </li>
+    </ul>
 </main>
 
 </body>

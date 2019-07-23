@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Youtube-DL web ui</title>
     <link rel="stylesheet" th:href="@{/public/css/main.css}"/>
-<!--    <link rel="stylesheet" th:href="@{/public/css/4.3.1_bootstrap.min.css}">-->
 </head>
 <body>
 <!--<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">-->
@@ -18,19 +17,19 @@
 
     <form action="/" role="form" th:action="@{/home/addEntry}" th:object="${entry}" method="post">
         <div>
-            <input type="text" th:field="*{url}" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"/>
-            <button type="submit" th:text="'▶'" />
+            <input type="text" th:field="*{ytUrl}" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"/>
+            <button class="button_start_download" type="submit" th:text="'▶'" />
         </div>
     </form>
 
-    <ol>
-        <li th:each="entry: ${entries}" th:text="${entry.url}"/>
-    </ol>
+    <ul class="downloadList">
+        <li class="downloadList__item" th:each="entry: ${entries}">
+            <span th:text="${entry.ytUrl}"/>
+            <p th:text="${entry.progress}"/>
+            <button th:if="${entry.finished and entry.progress > 99}" th:text="Download" type="submit" th:value="${entry.fileUri}"/>
+        </li>
+    </ul>
 </main>
-
-<!--<script th:src="@{/public/js/jquery-3.3.1-min.js}" type="text/javascript"></script>-->
-<!--<script th:src="@{/public/js/popper-min.js}" type="text/javascript"></script>-->
-<!--<script th:src="@{/public/js/bootstrap-min.js}" type="text/javascript"></script>-->
 
 </body>
 </html>

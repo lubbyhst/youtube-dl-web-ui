@@ -27,7 +27,7 @@ input {
     padding: 10px;
 }
 
-button {
+.button_start_download {
     border: none;
     border-radius: 2px;
     box-shadow: 0 0 5px #282828;
@@ -40,4 +40,28 @@ button {
     height: 40px;
     padding-bottom: 3px;
     outline: none;
+}
+
+.downloadList {
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 0 5px #282828;
+    outline: none;
+    background: #2f343f;
+    display: flex;
+    flex: 0 1 600px;
+    flex-wrap: wrap;
+    list-style-type: none;
+    margin-top: 20px;
+    max-height: 80%;
+    overflow-y: auto;
+    position: relative;
+}
+
+
+.downloadList__item {
+    display: flex;
+    flex: 1 0 300px;
+    padding: 10px;
+    width: 100%;
 }

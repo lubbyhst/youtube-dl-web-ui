@@ -40,7 +40,7 @@ public class YoutubeDlService {
         }
         logger.info("Starting new download thread.");
 
-        ProcessBuilder processBuilder = new ProcessBuilder(generateParameters(entry.getUrl()));
+        ProcessBuilder processBuilder = new ProcessBuilder(generateParameters(entry.getYtUrl()));
         processBuilder.directory(new File(propertiesService.getStringValue(PropertyKeys.YT_DL_OUTPUT_DIR)));
         processBuilder.redirectErrorStream(false);
 
