@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,7 +62,14 @@ public class YoutubeDlService {
         br = new BufferedReader(new InputStreamReader(process.getErrorStream()));
         line = null;
         while ((line = br.readLine()) != null ){
-            logger.warning(line);
+            if(line.contains("[debug]")){
+                logger.info(line);
+            }else {
+                logger.warning(line);
+            }
+            if(line.contains("ERROR:")){
+                entry.setErrorMessage(line);
+            }
         }
 
         process.waitFor();
