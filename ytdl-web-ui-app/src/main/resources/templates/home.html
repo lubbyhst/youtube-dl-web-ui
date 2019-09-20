@@ -12,9 +12,11 @@
 <!--</nav>-->
 
 <main class="container" role="main">
+    <div>
+        <h1>Youtube-dl web ui</h1>
+    </div>
 
-    <h1>Youtube-dl web ui</h1>
-
+<div class="downloadPanel">
     <form action="/" role="form" th:action="@{/home/addEntry}" th:object="${entry}" method="post">
         <div>
             <input type="text" th:field="*{ytUrl}" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"/>
@@ -24,11 +26,18 @@
 
     <ul class="downloadList">
         <li class="downloadList__item" th:each="entry: ${entries}">
-            <span th:text="${entry.ytUrl}"/>
-            <p th:text="${entry.progress}"/>
-            <button th:if="${entry.finished and entry.progress > 99}" th:text="Download" type="submit" th:value="${entry.fileUri}"/>
+            <div>
+                <span class="video__name" th:text="${entry.ytUrl}"/>
+                <span class="right_float" th:if="${!entry.finished and not (entry.progress > 99)}" th:text="${entry.progress}"/>
+                <button class="right_float" th:if="${entry.finished and (entry.progress > 99)}" th:text="Download" type="submit" th:value="${entry.fileUri}"/>
+            </div>
+            <div class="error_message" th:if="${entry.errorMessage}">
+                <span class="error_message" th:if="${entry.errorMessage}" th:text="${entry.errorMessage}"/>
+            </div>
         </li>
     </ul>
+</div>
+
 </main>
 
 </body>

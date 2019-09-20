@@ -11,6 +11,7 @@ public class Entry implements Serializable {
     private double progress;
     private boolean finished;
     private String fileUri;
+    private String errorMessage;
 
     public String getId() {
         return id;
@@ -50,5 +51,13 @@ public class Entry implements Serializable {
 
     public void setFileUri(String fileUri) {
         this.fileUri = fileUri;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }
