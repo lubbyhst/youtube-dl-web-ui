@@ -17,4 +17,4 @@ In root of the project execute the following command:
 
 In root of the project execut the following command:
 
-`java -jar backend/target/backend-0.0.1-SNAPSHOT.jar`
+`java -jar ytdl-web-ui-app/target/ytdl-web-ui-app-0.0.1-SNAPSHOT.jar`
