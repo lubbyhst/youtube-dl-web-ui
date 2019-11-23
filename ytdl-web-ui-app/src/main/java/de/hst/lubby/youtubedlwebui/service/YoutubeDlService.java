@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 @Service
 public class YoutubeDlService {
 
-    private Logger logger = Logger.getLogger(YoutubeDlService.class.getName());
+    private final Logger logger = Logger.getLogger(YoutubeDlService.class.getName());
 
     @Autowired
     private IQueueService queueService;
@@ -31,70 +31,92 @@ public class YoutubeDlService {
 
 
     @Scheduled(fixedRate = 1000)
-    public void checkQueue() throws IOException, InterruptedException {
-        startYtDownload(queueService.getNextEntry());
+    public void checkQueue() {
+        final Entry entry = this.queueService.getNextEntry();
+        try {
+            startYtDownload(entry);
+        } catch (final IOException | InterruptedException e) {
+            this.logger.log(Level.SEVERE, "Exception occurs trying to download video from YT.", e);
+            entry.setErrorMessage(e.getMessage());
+            entry.setFinished(true);
+        }
     }
 
-    private void startYtDownload(Entry entry) throws IOException, InterruptedException {
+    private void startYtDownload(final Entry entry) throws IOException, InterruptedException {
         if(entry == null){
-            logger.fine("Entry was null.");
+            this.logger.fine("Entry was null.");
             return;
         }
-        logger.info("Starting new download thread.");
+        this.logger.info("Starting new download thread.");
 
-        ProcessBuilder processBuilder = new ProcessBuilder(generateParameters(entry.getYtUrl(), entry.getFormatOption()));
-        processBuilder.directory(new File(propertiesService.getStringValue(PropertyKeys.YT_DL_OUTPUT_DIR)));
+        final ProcessBuilder processBuilder = new ProcessBuilder(generateParameters(entry.getYtUrl(), entry.getFormatOption()));
+        processBuilder.directory(new File(this.propertiesService.getStringValue(PropertyKeys.YT_DL_OUTPUT_DIR)));
         processBuilder.redirectErrorStream(false);
 
-        Process process = processBuilder.start();
+        final Process process = processBuilder.start();
 
         BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String line;
 
         while ((line = br.readLine()) != null ){
-                logger.fine(line);
+            this.logger.fine(line);
                 if(line.matches("\\[download\\].*%.of.*")){
-                    Matcher matcher = Pattern.compile("(?<=\\[download\\] ).....(?=.*%)").matcher(line);
+                    final Matcher matcher = Pattern.compile("(?<=\\[download\\] ).{1,3}(?=.*%)").matcher(line);
                     if(matcher.find()){
                         entry.setProgress(Double.valueOf(matcher.group(0).trim()));
                     }
                 }
+            if (line.matches(".+[.][a-zA-Z0-9]{3} .*") || line.matches(".+[.][a-zA-Z0-9]{3}$")) {
+                final Matcher fileAlreadyExistsMatcher = Pattern.compile("(?<=\\[download\\] ).+[.][a-zA-Z0-9]{3}").matcher(line);
+                if (fileAlreadyExistsMatcher.find()) {
+                    entry.setFileUri(processBuilder.directory().getAbsolutePath() + "//" + fileAlreadyExistsMatcher.group(0));
+                }
+                final Matcher fileNotExistsMatcher = Pattern.compile("(?<=\\[download\\] Destination: ).+[.][a-zA-Z0-9]{3}.*$").matcher(line);
+                if (fileNotExistsMatcher.find()) {
+                    entry.setFileUri(processBuilder.directory().getAbsolutePath() + "//" + fileNotExistsMatcher.group(0));
+                }
+                this.logger.info(String.format("Downloaded video to %s", entry.getFileUri()));
+            }
         }
         br = new BufferedReader(new InputStreamReader(process.getErrorStream()));
         line = null;
         while ((line = br.readLine()) != null ){
             if(line.contains("[debug]")){
-                logger.info(line);
+                this.logger.info(line);
             }else {
-                logger.warning(line);
+                this.logger.warning(line);
             }
-            if(line.contains("ERROR:")){
-                entry.setErrorMessage(line);
+            if (line.contains("ERROR:") || line.contains("error:") || line.contains("Error:")) {
+                if (entry.getErrorMessage() == null) {
+                    entry.setErrorMessage(line);
+                }
+                entry.setErrorMessage(entry.getErrorMessage() + "\n" + line);
             }
         }
 
         process.waitFor();
         entry.setFinished(true);
-        logger.info("Process finished.");
+        this.logger.info("Process finished.");
     }
 
-    private String[] generateParameters(String url, FormatOptions formatOption){
-        List<String> parameters = new ArrayList<>();
-        parameters.add(propertiesService.getStringValue(PropertyKeys.YT_DL_COMMAND));
-        if(Boolean.parseBoolean(propertiesService.getStringValue(PropertyKeys.YT_DL_VERBOSE))){
+    private String[] generateParameters(final String url, final FormatOptions formatOption) {
+        final List<String> parameters = new ArrayList<>();
+        parameters.add(this.propertiesService.getStringValue(PropertyKeys.YT_DL_COMMAND));
+        if (Boolean.parseBoolean(this.propertiesService.getStringValue(PropertyKeys.YT_DL_VERBOSE))) {
             parameters.add("--verbose");
         }
-        if(Boolean.parseBoolean(propertiesService.getStringValue(PropertyKeys.YT_DL_IGNORE_CONFIG))){
+        if (Boolean.parseBoolean(this.propertiesService.getStringValue(PropertyKeys.YT_DL_IGNORE_CONFIG))) {
             parameters.add("--ignore-config");
         }
-        if(Boolean.parseBoolean(propertiesService.getStringValue(PropertyKeys.YT_DL_NO_CONTINUE))){
+        if (Boolean.parseBoolean(this.propertiesService.getStringValue(PropertyKeys.YT_DL_NO_CONTINUE))) {
             parameters.add("--no-continue");
         }
-        if(Boolean.parseBoolean(propertiesService.getStringValue(PropertyKeys.YT_DL_RESTRICT_FILENAMES))){
+        if (Boolean.parseBoolean(this.propertiesService.getStringValue(PropertyKeys.YT_DL_RESTRICT_FILENAMES))) {
             parameters.add("--restrict-filenames");
         }
         parameters.add(String.format("-f %s", formatOption.getFormat()));
-        parameters.add(String.format("-o %s", propertiesService.getStringValue(PropertyKeys.YT_DL_OUTPUT_TEMPLATE, "/tmp/%(title)s.%(ext)s")));
+        parameters.add(String.format("-o %s", this.propertiesService.getStringValue(PropertyKeys.YT_DL_OUTPUT_TEMPLATE, "%(title)s.%(ext)s").trim()));
+//        parameters.add("--get-filename");
 
         parameters.add(url);
         return parameters.toArray(new String[parameters.size()]);
