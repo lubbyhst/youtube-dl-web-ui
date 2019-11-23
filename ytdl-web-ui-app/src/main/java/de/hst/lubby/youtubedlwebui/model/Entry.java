@@ -2,6 +2,8 @@ package de.hst.lubby.youtubedlwebui.model;
 
 import java.io.Serializable;
 
+import de.hst.lubby.youtubedlwebui.enums.FormatOptions;
+
 public class Entry implements Serializable {
 
     private static final long serialVersionUID = -8582553475226281591L;
@@ -12,6 +14,16 @@ public class Entry implements Serializable {
     private boolean finished;
     private String fileUri;
     private String errorMessage;
+
+    public FormatOptions getFormatOption() {
+        return formatOption;
+    }
+
+    public void setFormatOption(FormatOptions formatOption) {
+        this.formatOption = formatOption;
+    }
+
+    private FormatOptions formatOption;
 
     public String getId() {
         return id;

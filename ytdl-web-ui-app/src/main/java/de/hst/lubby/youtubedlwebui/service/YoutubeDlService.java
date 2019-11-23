@@ -1,5 +1,6 @@
 package de.hst.lubby.youtubedlwebui.service;
 
+import de.hst.lubby.youtubedlwebui.enums.FormatOptions;
 import de.hst.lubby.youtubedlwebui.enums.PropertyKeys;
 import de.hst.lubby.youtubedlwebui.model.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class YoutubeDlService {
         }
         logger.info("Starting new download thread.");
 
-        ProcessBuilder processBuilder = new ProcessBuilder(generateParameters(entry.getYtUrl()));
+        ProcessBuilder processBuilder = new ProcessBuilder(generateParameters(entry.getYtUrl(), entry.getFormatOption()));
         processBuilder.directory(new File(propertiesService.getStringValue(PropertyKeys.YT_DL_OUTPUT_DIR)));
         processBuilder.redirectErrorStream(false);
 
@@ -77,7 +78,7 @@ public class YoutubeDlService {
         logger.info("Process finished.");
     }
 
-    private String[] generateParameters(String url){
+    private String[] generateParameters(String url, FormatOptions formatOption){
         List<String> parameters = new ArrayList<>();
         parameters.add(propertiesService.getStringValue(PropertyKeys.YT_DL_COMMAND));
         if(Boolean.parseBoolean(propertiesService.getStringValue(PropertyKeys.YT_DL_VERBOSE))){
@@ -92,7 +93,7 @@ public class YoutubeDlService {
         if(Boolean.parseBoolean(propertiesService.getStringValue(PropertyKeys.YT_DL_RESTRICT_FILENAMES))){
             parameters.add("--restrict-filenames");
         }
-        parameters.add(String.format("-f %s", propertiesService.getStringValue(PropertyKeys.YT_DL_FORMAT, "mp4")));
+        parameters.add(String.format("-f %s", formatOption.getFormat()));
         parameters.add(String.format("-o %s", propertiesService.getStringValue(PropertyKeys.YT_DL_OUTPUT_TEMPLATE, "/tmp/%(title)s.%(ext)s")));
 
         parameters.add(url);

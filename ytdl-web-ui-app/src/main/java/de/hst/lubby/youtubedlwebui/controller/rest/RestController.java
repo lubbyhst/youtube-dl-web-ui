@@ -30,22 +30,22 @@ public class RestController {
         logger.info("Received new entry.");
         logger.info(objectMapper.writeValueAsString(entry));
         queueService.addToQueue(entry);
-        return  new ResponseEntity<Void>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/getAllEntries", method = RequestMethod.GET)
     public ResponseEntity<List<Entry>> getAllEntries(){
-        return new ResponseEntity<List<Entry>>(queueService.getAllEntries(), HttpStatus.OK);
+        return new ResponseEntity<>(queueService.getAllEntries(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getEntry", method = RequestMethod.GET)
     public ResponseEntity<Entry> getEntry(){
-        return new ResponseEntity<Entry>(queueService.getNextEntry(), HttpStatus.OK);
+        return new ResponseEntity<>(queueService.getNextEntry(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/clearQueue", method = RequestMethod.GET)
     public ResponseEntity<Void> clearQueue(){
         queueService.clearQueue();
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

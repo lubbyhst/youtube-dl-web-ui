@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class QueueService implements IQueueService{
@@ -14,7 +15,13 @@ public class QueueService implements IQueueService{
 
     @Override
     public void addToQueue(Entry entry) {
+        entry.setId(UUID.randomUUID().toString());
         this.entryList.add(entry);
+    }
+
+    @Override
+    public Entry getEntryById(String id){
+       return entryList.stream().filter(entry -> entry.getId().equals(id)).findFirst().get();
     }
 
     @Override

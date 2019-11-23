@@ -9,6 +9,8 @@ public interface IQueueService {
 
     void addToQueue(Entry entry);
 
+    Entry getEntryById(String id);
+
     Entry getNextEntry();
 
     List<Entry> getAllEntries();

@@ -20,6 +20,10 @@
     <form action="/" role="form" th:action="@{/home/addEntry}" th:object="${entry}" method="post">
         <div>
             <input type="text" th:field="*{ytUrl}" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"/>
+            <select th:field="*{formatOption}" name="formatOption">
+                <option th:each="formatOption : ${T(de.hst.lubby.youtubedlwebui.enums.FormatOptions).values()}"
+                        th:value="${formatOption}" th:text="${formatOption.displayedName}"></option>
+            </select>
             <button class="button_start_download" type="submit" th:text="'▶'" />
         </div>
     </form>
@@ -29,7 +33,7 @@
             <div>
                 <span class="video__name" th:text="${entry.ytUrl}"/>
                 <span class="right_float" th:if="${!entry.finished and not (entry.progress > 99)}" th:text="${entry.progress}"/>
-                <button class="right_float" th:if="${entry.finished and (entry.progress > 99)}" th:text="Download" type="submit" th:value="${entry.fileUri}"/>
+                <a class="right_float" th:if="${entry.finished and (entry.progress > 99)}" th:href="@{|/home/download?id=${entry.id}|}"><span th:text="Download"/></a>
             </div>
             <div class="error_message" th:if="${entry.errorMessage}">
                 <span class="error_message" th:if="${entry.errorMessage}" th:text="${entry.errorMessage}"/>
