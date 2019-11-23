@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <title>Youtube-DL web ui</title>
     <link rel="stylesheet" th:href="@{/public/css/main.css}"/>
 </head>
@@ -17,14 +17,14 @@
     </div>
 
 <div class="downloadPanel">
-    <form action="/" role="form" th:action="@{/home/addEntry}" th:object="${entry}" method="post">
+    <form action="/" method="post" role="form" th:action="@{/home/addEntry}" th:object="${entry}">
         <div>
-            <input type="text" th:field="*{ytUrl}" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"/>
-            <select th:field="*{formatOption}" name="formatOption">
+            <input pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$" th:field="*{ytUrl}" type="text"/>
+            <select name="formatOption" th:field="*{formatOption}">
                 <option th:each="formatOption : ${T(de.hst.lubby.youtubedlwebui.enums.FormatOptions).values()}"
-                        th:value="${formatOption}" th:text="${formatOption.displayedName}"></option>
+                        th:text="${formatOption.displayedName}" th:value="${formatOption}"></option>
             </select>
-            <button class="button_start_download" type="submit" th:text="'▶'" />
+            <button class="button_start_download" th:text="'▶'" type="submit" />
         </div>
     </form>
 
@@ -33,7 +33,8 @@
             <div>
                 <span class="video__name" th:text="${entry.ytUrl}"/>
                 <span class="right_float" th:if="${!entry.finished and not (entry.progress > 99)}" th:text="${entry.progress}"/>
-                <a class="right_float" th:if="${entry.finished and (entry.progress > 99)}" th:href="@{|/home/download?id=${entry.id}|}"><span th:text="Download"/></a>
+                <a class="right_float button" th:href="@{|/home/download?id=${entry.id}|}"
+                   th:if="${entry.finished and (entry.progress > 99)}"><span th:text="Download"/></a>
             </div>
             <div class="error_message" th:if="${entry.errorMessage}">
                 <span class="error_message" th:if="${entry.errorMessage}" th:text="${entry.errorMessage}"/>
