@@ -29,6 +29,12 @@ public class HomeController {
         return "home.html";
     }
 
+    @RequestMapping(value = "entryList", method = RequestMethod.GET)
+    public String showEntries(final Model model) {
+        model.addAttribute("entries", this.queueService.getAllEntries());
+        return "results :: entryList";
+    }
+
     @RequestMapping(value = "addEntry", method = RequestMethod.POST)
     public String addEntry(@ModelAttribute final Entry entry, final BindingResult errors, final Model model) {
         if(entry.getYtUrl() != null && !entry.getYtUrl().isEmpty()){

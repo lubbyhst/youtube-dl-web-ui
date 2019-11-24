@@ -24,26 +24,30 @@
                 <option th:each="formatOption : ${T(de.hst.lubby.youtubedlwebui.enums.FormatOptions).values()}"
                         th:text="${formatOption.displayedName}" th:value="${formatOption}"></option>
             </select>
-            <button class="button_start_download" th:text="'▶'" type="submit" />
+            <button class="button_start_download" onclick="retrieveEntryList()" th:text="'▶'" type="submit"/>
         </div>
     </form>
+    <div id="entryList-bloc" th:fragment="entryList" th:unless="${#lists.isEmpty(entries)}">
+        <ul class="downloadList">
+            <li class="downloadList__item" th:each="entry: ${entries}">
+                <div>
+                    <span class="video__name" th:if="${entry.videoName == null}" th:text="${entry.ytUrl}"/>
+                    <span class="video__name" th:if="${entry.videoName != null}" th:text="${entry.videoName}"/>
 
-    <ul class="downloadList">
-        <li class="downloadList__item" th:each="entry: ${entries}">
-            <div>
-                <span class="video__name" th:text="${entry.ytUrl}"/>
-                <span class="right_float" th:if="${!entry.finished and not (entry.progress > 99)}" th:text="${entry.progress}"/>
-                <a class="right_float button" th:href="@{|/home/download?id=${entry.id}|}"
-                   th:if="${entry.finished and (entry.progress > 99)}"><span th:text="Download"/></a>
-            </div>
-            <div class="error_message" th:if="${entry.errorMessage}">
-                <span class="error_message" th:if="${entry.errorMessage}" th:text="${entry.errorMessage}"/>
-            </div>
-        </li>
-    </ul>
+                    <span class="right_float" th:if="${!entry.finished and not (entry.progress > 99)}"
+                          th:text="${entry.progress}"/>
+                    <a class="right_float button" th:href="@{|/home/download?id=${entry.id}|}"
+                       th:if="${entry.finished and (entry.progress > 99)}"><span th:text="Download"/></a>
+                </div>
+                <div class="error_message" th:if="${entry.errorMessage}">
+                    <span class="error_message" th:if="${entry.errorMessage}" th:text="${entry.errorMessage}"/>
+                </div>
+            </li>
+        </ul>
+    </div>
 </div>
 
 </main>
-
+<script th:src="@{/public/js/main.js}" type="text/javascript"/>
 </body>
 </html>

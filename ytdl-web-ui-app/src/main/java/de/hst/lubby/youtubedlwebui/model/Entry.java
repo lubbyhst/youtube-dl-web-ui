@@ -1,8 +1,8 @@
 package de.hst.lubby.youtubedlwebui.model;
 
-import java.io.Serializable;
-
 import de.hst.lubby.youtubedlwebui.enums.FormatOptions;
+
+import java.io.Serializable;
 
 public class Entry implements Serializable {
 
@@ -10,66 +10,74 @@ public class Entry implements Serializable {
 
     private String id;
     private String ytUrl;
+    private String videoName;
     private double progress;
     private boolean finished;
     private String fileUri;
     private String errorMessage;
+    private FormatOptions formatOption;
 
     public FormatOptions getFormatOption() {
-        return formatOption;
+        return this.formatOption;
     }
 
-    public void setFormatOption(FormatOptions formatOption) {
+    public void setFormatOption(final FormatOptions formatOption) {
         this.formatOption = formatOption;
     }
 
-    private FormatOptions formatOption;
-
     public String getId() {
-        return id;
+        return this.id;
     }
 
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
     public String getYtUrl() {
-        return ytUrl;
+        return this.ytUrl;
     }
 
-    public void setYtUrl(String ytUrl) {
+    public void setYtUrl(final String ytUrl) {
         this.ytUrl = ytUrl;
     }
 
     public double getProgress() {
-        return progress;
+        return this.progress;
     }
 
-    public void setProgress(double progress) {
+    public void setProgress(final double progress) {
         this.progress = progress;
     }
 
     public boolean isFinished() {
-        return finished;
+        return this.finished;
     }
 
-    public void setFinished(boolean finished) {
+    public void setFinished(final boolean finished) {
         this.finished = finished;
     }
 
     public String getFileUri() {
-        return fileUri;
+        return this.fileUri;
     }
 
-    public void setFileUri(String fileUri) {
+    public void setFileUri(final String fileUri) {
         this.fileUri = fileUri;
     }
 
     public String getErrorMessage() {
-        return errorMessage;
+        return this.errorMessage;
     }
 
-    public void setErrorMessage(String errorMessage) {
+    public void setErrorMessage(final String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    public String getVideoName() {
+        return this.videoName;
+    }
+
+    public void setVideoName(final String videoName) {
+        this.videoName = videoName;
     }
 }

@@ -70,10 +70,12 @@ public class YoutubeDlService {
                 final Matcher fileAlreadyExistsMatcher = Pattern.compile("(?<=\\[download\\] ).+[.][a-zA-Z0-9]{3}").matcher(line);
                 if (fileAlreadyExistsMatcher.find()) {
                     entry.setFileUri(processBuilder.directory().getAbsolutePath() + "//" + fileAlreadyExistsMatcher.group(0));
+                    entry.setVideoName(fileAlreadyExistsMatcher.group(0));
                 }
                 final Matcher fileNotExistsMatcher = Pattern.compile("(?<=\\[download\\] Destination: ).+[.][a-zA-Z0-9]{3}.*$").matcher(line);
                 if (fileNotExistsMatcher.find()) {
                     entry.setFileUri(processBuilder.directory().getAbsolutePath() + "//" + fileNotExistsMatcher.group(0));
+                    entry.setVideoName(fileNotExistsMatcher.group(0));
                 }
                 this.logger.info(String.format("Downloaded video to %s", entry.getFileUri()));
             }
