@@ -6,12 +6,21 @@ This project extends the youtube-dl (https://rg3.github.io/youtube-dl/) tool wit
 
 - installed JDK minimum version 1.8
 - installed maven build tool
+- installed docker deamon
 
 ### Build the web ui
 
 In root of the project execute the following command:
 
 `mvn clean install`
+
+### Build the docker image
+
+In root of the project execute the following command:
+
+`mvn clean install`
+
+Docker image build is a part of the default build lifecycle.
 
 ### Start the web ui
 
