@@ -1,8 +1,8 @@
-package de.hst.lubby.youtubedlwebui.service;
+package com.github.lubbyhst.youtubedlwebui.service;
 
-import de.hst.lubby.youtubedlwebui.enums.FormatOptions;
-import de.hst.lubby.youtubedlwebui.enums.PropertyKeys;
-import de.hst.lubby.youtubedlwebui.model.Entry;
+import com.github.lubbyhst.youtubedlwebui.enums.FormatOptions;
+import com.github.lubbyhst.youtubedlwebui.enums.PropertyKeys;
+import com.github.lubbyhst.youtubedlwebui.model.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;

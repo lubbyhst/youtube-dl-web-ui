@@ -21,7 +21,7 @@
         <div>
             <input pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$" th:field="*{ytUrl}" type="text"/>
             <select name="formatOption" th:field="*{formatOption}">
-                <option th:each="formatOption : ${T(de.hst.lubby.youtubedlwebui.enums.FormatOptions).values()}"
+                <option th:each="formatOption : ${T(com.github.lubbyhstyoutubedlwebui.enums.FormatOptions).values()}"
                         th:text="${formatOption.displayedName}" th:value="${formatOption}"></option>
             </select>
             <button class="button_start_download" onclick="retrieveEntryList()" th:text="'▶'" type="submit"/>

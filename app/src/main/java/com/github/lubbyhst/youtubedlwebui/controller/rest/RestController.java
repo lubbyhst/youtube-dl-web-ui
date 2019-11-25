@@ -1,9 +1,10 @@
-package de.hst.lubby.youtubedlwebui.controller.rest;
+package com.github.lubbyhst.youtubedlwebui.controller.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.hst.lubby.youtubedlwebui.model.Entry;
-import de.hst.lubby.youtubedlwebui.service.IQueueService;
+import com.github.lubbyhst.youtubedlwebui.service.IQueueService;
+import com.github.lubbyhst.youtubedlwebui.model.Entry;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

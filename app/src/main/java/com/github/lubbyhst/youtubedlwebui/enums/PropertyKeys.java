@@ -1,4 +1,4 @@
-package de.hst.lubby.youtubedlwebui.enums;
+package com.github.lubbyhst.youtubedlwebui.enums;
 
 public enum PropertyKeys {
 

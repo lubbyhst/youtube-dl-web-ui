@@ -1,7 +1,6 @@
-package de.hst.lubby.youtubedlwebui.service;
+package com.github.lubbyhst.youtubedlwebui.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import de.hst.lubby.youtubedlwebui.model.Entry;
+import com.github.lubbyhst.youtubedlwebui.model.Entry;
 
 import java.util.List;
 

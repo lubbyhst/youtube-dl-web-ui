@@ -1,22 +1,17 @@
-package de.hst.lubby.youtubedlwebui;
+package com.github.lubbyhst.youtubedlwebui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeansException;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Description;
-import org.springframework.context.event.EventListener;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import java.io.File;
 import java.util.concurrent.Executor;
 import java.util.logging.Logger;
 

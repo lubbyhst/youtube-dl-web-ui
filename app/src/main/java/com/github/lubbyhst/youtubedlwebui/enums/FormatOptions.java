@@ -1,4 +1,4 @@
-package de.hst.lubby.youtubedlwebui.enums;
+package com.github.lubbyhst.youtubedlwebui.enums;
 
 public enum FormatOptions {
     VIDEO_HD("bestvideo[height<=1080]+bestaudio/best[height<=1080][ext=mp4]", "Video 1080p mp4"),

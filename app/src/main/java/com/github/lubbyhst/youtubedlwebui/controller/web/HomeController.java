@@ -1,7 +1,8 @@
-package de.hst.lubby.youtubedlwebui.controller.web;
+package com.github.lubbyhst.youtubedlwebui.controller.web;
 
-import de.hst.lubby.youtubedlwebui.model.Entry;
-import de.hst.lubby.youtubedlwebui.service.QueueService;
+import com.github.lubbyhst.youtubedlwebui.service.QueueService;
+import com.github.lubbyhst.youtubedlwebui.model.Entry;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;

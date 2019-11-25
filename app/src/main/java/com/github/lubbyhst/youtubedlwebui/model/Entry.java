@@ -1,6 +1,6 @@
-package de.hst.lubby.youtubedlwebui.model;
+package com.github.lubbyhst.youtubedlwebui.model;
 
-import de.hst.lubby.youtubedlwebui.enums.FormatOptions;
+import com.github.lubbyhst.youtubedlwebui.enums.FormatOptions;
 
 import java.io.Serializable;
 

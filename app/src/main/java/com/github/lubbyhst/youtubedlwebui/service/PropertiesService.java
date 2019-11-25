@@ -1,7 +1,6 @@
-package de.hst.lubby.youtubedlwebui.service;
+package com.github.lubbyhst.youtubedlwebui.service;
 
-import de.hst.lubby.youtubedlwebui.YoutubeDlWebUiApplication;
-import de.hst.lubby.youtubedlwebui.enums.PropertyKeys;
+import com.github.lubbyhst.youtubedlwebui.enums.PropertyKeys;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.configuration2.FileBasedConfiguration;
 import org.apache.commons.configuration2.PropertiesConfiguration;
