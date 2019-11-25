@@ -1,0 +1,13 @@
+name: Code-Quality
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@v1.1
