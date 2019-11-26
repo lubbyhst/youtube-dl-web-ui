@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,8 +50,8 @@ public class YoutubeDlService {
         }
         this.logger.info("Starting new download thread.");
 
-        final ProcessBuilder processBuilder = new ProcessBuilder(generateParameters(entry.getYtUrl(), entry.getFormatOption()));
-        processBuilder.directory(new File(this.propertiesService.getStringValue(PropertyKeys.YT_DL_OUTPUT_DIR)));
+        final ProcessBuilder processBuilder = new ProcessBuilder(Arrays.asList(generateParameters(entry.getYtUrl(), entry.getFormatOption())));
+        processBuilder.directory(new File(this.propertiesService.getStringValue(PropertyKeys.YT_DL_OUTPUT_DIR, "downloads")));
         processBuilder.redirectErrorStream(false);
 
         final Process process = processBuilder.start();
@@ -67,7 +68,7 @@ public class YoutubeDlService {
                     }
                 }
             if (line.matches(".+[.][a-zA-Z0-9]{3} .*") || line.matches(".+[.][a-zA-Z0-9]{3}$")) {
-                final Matcher fileAlreadyExistsMatcher = Pattern.compile("(?<=\\[download\\] ).+[.][a-zA-Z0-9]{3}").matcher(line);
+                final Matcher fileAlreadyExistsMatcher = Pattern.compile("(?<=\\[download\\] ).+[.][a-zA-Z0-9]{3}(?= has already been.*)").matcher(line);
                 if (fileAlreadyExistsMatcher.find()) {
                     entry.setFileUri(processBuilder.directory().getAbsolutePath() + "//" + fileAlreadyExistsMatcher.group(0));
                     entry.setVideoName(fileAlreadyExistsMatcher.group(0));
