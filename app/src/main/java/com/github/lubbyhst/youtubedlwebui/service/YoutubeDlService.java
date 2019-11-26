@@ -116,8 +116,8 @@ public class YoutubeDlService {
         if (Boolean.parseBoolean(this.propertiesService.getStringValue(PropertyKeys.YT_DL_RESTRICT_FILENAMES))) {
             parameters.add("--restrict-filenames");
         }
-        parameters.add(String.format("-f %s", formatOption.getFormat()));
-        parameters.add(String.format("-o %s", this.propertiesService.getStringValue(PropertyKeys.YT_DL_OUTPUT_TEMPLATE, "%(title)s.%(ext)s").trim()));
+        parameters.add(String.format("-f %s", formatOption != null ? formatOption.getFormat() : "best"));
+        parameters.add(String.format("-o %s", this.propertiesService.getStringValue(PropertyKeys.YT_DL_OUTPUT_TEMPLATE, "%(title)s.%(ext)s")).trim());
 //        parameters.add("--get-filename");
 
         parameters.add(url);

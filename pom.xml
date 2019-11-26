@@ -29,6 +29,18 @@
         <version.apache.commons.configuration2>2.2</version.apache.commons.configuration2>
         <version.commons.beanutils>1.9.3</version.commons.beanutils>
         <version.bootstrap>4.2.1</version.bootstrap>
+        <version.mockito>3.1.0</version.mockito>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${version.mockito}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>
