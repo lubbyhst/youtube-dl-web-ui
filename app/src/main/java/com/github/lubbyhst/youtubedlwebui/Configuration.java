@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 @EnableWebMvc
 public class Configuration implements WebMvcConfigurer, ApplicationContextAware {
 
-    private Logger logger = Logger.getLogger(Configuration.class.getName());
+    private final Logger logger = Logger.getLogger(Configuration.class.getName());
 
     private ApplicationContext applicationContext;
 
@@ -34,7 +34,7 @@ public class Configuration implements WebMvcConfigurer, ApplicationContextAware 
     @Bean
     @Description("Spring Message Resolver")
     public ResourceBundleMessageSource messageSource() {
-        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename("messages");
         return messageSource;
     }
@@ -46,7 +46,7 @@ public class Configuration implements WebMvcConfigurer, ApplicationContextAware 
 
     @Bean
     public Executor asyncExecutor() {
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(2);
         executor.setMaxPoolSize(2);
         executor.setQueueCapacity(0);
@@ -56,7 +56,7 @@ public class Configuration implements WebMvcConfigurer, ApplicationContextAware 
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 }

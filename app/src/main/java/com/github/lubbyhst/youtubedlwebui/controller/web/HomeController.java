@@ -1,8 +1,7 @@
 package com.github.lubbyhst.youtubedlwebui.controller.web;
 
-import com.github.lubbyhst.youtubedlwebui.service.QueueService;
 import com.github.lubbyhst.youtubedlwebui.model.Entry;
-
+import com.github.lubbyhst.youtubedlwebui.service.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
@@ -30,10 +29,10 @@ public class HomeController {
         return "home.html";
     }
 
-    @RequestMapping(value = "entryList", method = RequestMethod.GET)
+    @RequestMapping(value = "/showEntries", method = RequestMethod.GET)
     public String showEntries(final Model model) {
         model.addAttribute("entries", this.queueService.getAllEntries());
-        return "results :: entryList";
+        return "home :: entryList";
     }
 
     @RequestMapping(value = "addEntry", method = RequestMethod.POST)
@@ -42,6 +41,16 @@ public class HomeController {
             this.queueService.addToQueue(entry);
         }
         return "redirect:/home/";
+    }
+
+    @RequestMapping(value = "entryStatus", method = RequestMethod.GET)
+    @ResponseBody
+    public double getStatusOfEntry(@RequestParam final String id) {
+        final Entry entry = this.queueService.getEntryById(id);
+        if (entry != null) {
+            return entry.getProgress();
+        }
+        return 0d;
     }
 
     @RequestMapping(value = "download", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)

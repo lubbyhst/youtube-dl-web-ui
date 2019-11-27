@@ -30,6 +30,9 @@ public class YoutubeDlService {
     @Autowired
     private PropertiesService propertiesService;
 
+    @Autowired
+    private SseService sseService;
+
 
     @Scheduled(fixedRate = 1000)
     public void checkQueue() {
@@ -65,6 +68,7 @@ public class YoutubeDlService {
                     final Matcher matcher = Pattern.compile("(?<=\\[download\\] ).{1,3}(?=.*%)").matcher(line);
                     if(matcher.find()){
                         entry.setProgress(Double.valueOf(matcher.group(0).trim()));
+                        this.sseService.sendUpdateEvent();
                     }
                 }
             if (line.matches(".+[.][a-zA-Z0-9]{3} .*") || line.matches(".+[.][a-zA-Z0-9]{3}$")) {
