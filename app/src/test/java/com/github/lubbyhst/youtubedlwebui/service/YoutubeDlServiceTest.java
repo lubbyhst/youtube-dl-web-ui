@@ -33,6 +33,9 @@ public class YoutubeDlServiceTest {
     @Mock
     private Process process;
 
+    @Mock
+    private SseService sseService;
+
     @InjectMocks
     private YoutubeDlService youtubeDlService;
 
@@ -62,6 +65,7 @@ public class YoutubeDlServiceTest {
         Mockito.when(this.process.getErrorStream()).thenReturn(new ByteArrayInputStream("".getBytes()));
         Mockito.when(this.processBuilder.directory()).thenReturn(new File("target/"));
         this.youtubeDlService.checkQueue();
+        Mockito.verify(this.sseService, Mockito.atLeastOnce()).sendUpdateEvent();
         Assert.assertEquals("Progress should be 100% after finished process.", this.entry.getProgress(), 100d, 0d);
     }
 }
