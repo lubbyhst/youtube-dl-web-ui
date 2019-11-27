@@ -17,7 +17,7 @@
     </div>
 
 <div class="downloadPanel">
-    <form action="/" method="post" role="form" th:action="@{/home/addEntry}" th:object="${entry}">
+    <form action="/" method="post" class="startDownloadForm" role="form" th:action="@{/home/addEntry}" th:object="${entry}">
         <div>
             <input pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$" th:field="*{ytUrl}" type="text"/>
             <select name="formatOption" th:field="*{formatOption}">
@@ -27,10 +27,10 @@
             <button class="button_start_download" onclick="retrieveEntryList()" th:text="'▶'" type="submit"/>
         </div>
     </form>
-    <div id="entryList-bloc" th:fragment="entryList" th:unless="${#lists.isEmpty(entries)}">
-        <ul class="downloadList">
-            <li class="downloadList__item" th:each="entry: ${entries}">
-                <div>
+    <div id="entryList-bloc" class="downloadTablePanel" th:fragment="entryList" th:unless="${#lists.isEmpty(entries)}">
+        <table class="downloadTable">
+            <tr class="downloadTable__item" th:each="entry: ${entries}">
+                <th class="downloadTableRow">
                     <span class="video__name" th:if="${entry.videoName == null}" th:text="${entry.ytUrl}"/>
                     <span class="video__name" th:if="${entry.videoName != null}" th:text="${entry.videoName}"/>
 
@@ -38,12 +38,13 @@
                           th:text="${entry.progress}"/>
                     <a class="right_float button" th:href="@{|/home/download?id=${entry.id}|}"
                        th:if="${entry.finished and (entry.progress > 99)}"><span th:text="Download"/></a>
-                </div>
-                <div class="error_message" th:if="${entry.errorMessage}">
+                </th>
+                <th class="error_message" th:if="${entry.errorMessage}">
                     <span class="error_message" th:if="${entry.errorMessage}" th:text="${entry.errorMessage}"/>
-                </div>
-            </li>
-        </ul>
+                </th>
+            </tr>
+            <br/>
+        </table>
     </div>
 </div>
 
