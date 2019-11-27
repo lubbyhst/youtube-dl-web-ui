@@ -19,6 +19,10 @@ form {
     width: 100%;
 }
 
+.startDownloadForm {
+    padding: 1%;
+}
+
 input {
     border: none;
     border-radius: 2px;
@@ -59,19 +63,25 @@ input {
     outline: none;
 }
 
-.downloadList {
+.downloadTable {
     border: none;
     border-radius: 2px;
     box-shadow: 0 0 5px #282828;
     outline: none;
     background: #2f343f;
+    width: 50%;
+}
+
+.downloadTableRow {
+    padding: 1%;
+}
+
+.downloadTablePanel {
+    align-content: center;
     display: flex;
-    flex: 0 1 600px;
     flex-wrap: wrap;
-    list-style-type: none;
-    max-height: 80%;
-    overflow-y: auto;
-    position: relative;
+    justify-content: center;
+    width: 100%;
 }
 
 .downloadPanel {
@@ -82,17 +92,15 @@ input {
     padding: 0 20px;
 }
 
-.downloadList__item {
-    flex: 1 0 300px;
+.downloadTable__item {
     padding: 10px;
-    margin: 0.1%;
-    width: 100%;
 }
 
 .video__name {
     color: #d3d0c8;
     word-break: break-all;
     word-wrap: break-word;
+    margin-right: 10px;
 }
 
 .right_float {
