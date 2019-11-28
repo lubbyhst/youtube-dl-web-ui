@@ -15,6 +15,6 @@ COPY jar/app.jar /opt/ytdlui/app.jar
 RUN curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
 RUN chmod a+rx /usr/local/bin/youtube-dl
 
-EXPOSE 8888
+EXPOSE 3000
 
 CMD ["java", "-jar", "/opt/ytdlui/app.jar"]

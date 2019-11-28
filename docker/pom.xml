@@ -112,7 +112,7 @@
                                     <DBUS_SESSION_BUS_ADDRESS>/dev/null</DBUS_SESSION_BUS_ADDRESS>
                                 </env>
                                 <ports>
-                                    <port>${docker.app.http.port}:8888</port>
+                                    <port>${docker.app.http.port}:3000</port>
                                 </ports>
                                 <wait>
                                     <log>.*Started YoutubeDlWebUiApplication.*</log>
