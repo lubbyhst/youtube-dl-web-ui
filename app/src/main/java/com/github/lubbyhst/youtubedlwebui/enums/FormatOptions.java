@@ -1,10 +1,10 @@
 package com.github.lubbyhst.youtubedlwebui.enums;
 
 public enum FormatOptions {
-    VIDEO_HD("18 --merge-output-format mp4", "Video 1080p mp4"),
-    VIDEO_MMI("18 --merge-output-format mp4 --recode-video mp4 --prefer-ffmpeg", "Video MMI special"),
-    VIDEO_SD("18 --merge-output-format mp4", "Video 480p mp4"),
-    AUDIO_ONLY("18 --extract-audio --audio-format mp3", "Audio mp3");
+    VIDEO_HD("mp4 --merge-output-format mp4", "Video 1080p mp4"),
+    VIDEO_MMI("mp4 --merge-output-format mp4 --recode-video mp4 --prefer-ffmpeg", "Video MMI special"),
+    VIDEO_SD("mp4 --merge-output-format mp4", "Video 480p mp4"),
+    AUDIO_ONLY("mp3 --extract-audio --audio-format mp3", "Audio mp3");
 
     private final String format;
     private final String displayedName;
