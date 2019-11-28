@@ -13,7 +13,7 @@
     </div>
 
     <div class="downloadPanel">
-        <form action="/" class="startDownloadForm" method="post" role="form" th:action="@{/home/addEntry}"
+        <form action="/" class="startDownloadForm" method="post" role="form" th:action="@{/addEntry}"
               th:object="${entry}">
             <div>
                 <input pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
@@ -35,7 +35,7 @@
 
                         <progress class="right_float" max="100" th:if="${!entry.finished and not (entry.progress > 99)}"
                                   th:value="${entry.progress}"/>
-                        <a class="right_float button" th:href="@{|/home/download?id=${entry.id}|}"
+                        <a class="right_float button" th:href="@{|/download?id=${entry.id}|}"
                            th:if="${entry.finished and (entry.progress > 99)}"><span th:text="Download"/></a>
                     </th>
                     <th class="error_message" th:if="${entry.errorMessage}">

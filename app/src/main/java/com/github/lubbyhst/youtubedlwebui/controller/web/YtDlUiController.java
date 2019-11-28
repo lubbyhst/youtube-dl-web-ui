@@ -14,10 +14,10 @@ import java.io.File;
 import java.util.logging.Logger;
 
 @Controller
-@RequestMapping(value = "/home")
-public class HomeController {
+@RequestMapping(value = "/")
+public class YtDlUiController {
 
-    private static final Logger logger = Logger.getLogger(HomeController.class.getName());
+    private static final Logger logger = Logger.getLogger(YtDlUiController.class.getName());
 
     @Autowired
     private QueueService queueService;
@@ -26,13 +26,13 @@ public class HomeController {
     public String main(final Model model) {
         model.addAttribute("entry", new Entry());
         model.addAttribute("entries", this.queueService.getAllEntries());
-        return "home.html";
+        return "index.html";
     }
 
     @RequestMapping(value = "/showEntries", method = RequestMethod.GET)
     public String showEntries(final Model model) {
         model.addAttribute("entries", this.queueService.getAllEntries());
-        return "home :: entryList";
+        return "index :: entryList";
     }
 
     @RequestMapping(value = "addEntry", method = RequestMethod.POST)
@@ -40,7 +40,7 @@ public class HomeController {
         if(entry.getYtUrl() != null && !entry.getYtUrl().isEmpty()){
             this.queueService.addToQueue(entry);
         }
-        return "redirect:/home/";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "entryStatus", method = RequestMethod.GET)
