@@ -7,48 +7,75 @@
     <link rel="stylesheet" th:href="@{/public/css/main.css}"/>
 </head>
 <body>
-<!--<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">-->
-<!--    <a class="navbar-brand" href="#">Home</a>-->
-<!--</nav>-->
-
 <main class="container" role="main">
     <div>
         <h1>Youtube-dl web ui</h1>
     </div>
 
-<div class="downloadPanel">
-    <form action="/" method="post" class="startDownloadForm" role="form" th:action="@{/home/addEntry}" th:object="${entry}">
-        <div>
-            <input pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$" th:field="*{ytUrl}" type="text"/>
-            <select name="formatOption" th:field="*{formatOption}">
-                <option th:each="formatOption : ${T(com.github.lubbyhst.youtubedlwebui.enums.FormatOptions).values()}"
-                        th:text="${formatOption.displayedName}" th:value="${formatOption}"></option>
-            </select>
-            <button class="button_start_download" onclick="retrieveEntryList()" th:text="'▶'" type="submit"/>
-        </div>
-    </form>
-    <div id="entryList-bloc" class="downloadTablePanel" th:fragment="entryList" th:unless="${#lists.isEmpty(entries)}">
-        <table class="downloadTable">
-            <tr class="downloadTable__item" th:each="entry: ${entries}">
-                <th class="downloadTableRow">
-                    <span class="video__name" th:if="${entry.videoName == null}" th:text="${entry.ytUrl}"/>
-                    <span class="video__name" th:if="${entry.videoName != null}" th:text="${entry.videoName}"/>
+    <div class="downloadPanel">
+        <form action="/" class="startDownloadForm" method="post" role="form" th:action="@{/home/addEntry}"
+              th:object="${entry}">
+            <div>
+                <input pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
+                       th:field="*{ytUrl}" type="text"/>
+                <select name="formatOption" th:field="*{formatOption}">
+                    <option th:each="formatOption : ${T(com.github.lubbyhst.youtubedlwebui.enums.FormatOptions).values()}"
+                            th:text="${formatOption.displayedName}" th:value="${formatOption}"></option>
+                </select>
+                <button class="button_start_download" onclick="updateEntryList()" th:text="'▶'" type="submit"/>
+            </div>
+        </form>
+        <div class="downloadTablePanel" id="entryList-bloc" th:fragment="entryList"
+             th:unless="${#lists.isEmpty(entries)}">
+            <table class="downloadTable">
+                <tr class="downloadTable__item" id="entryList" th:each="entry: ${entries}">
+                    <th class="downloadTableRow">
+                        <span class="video__name" th:if="${entry.videoName == null}" th:text="${entry.ytUrl}"/>
+                        <span class="video__name" th:if="${entry.videoName != null}" th:text="${entry.videoName}"/>
 
-                    <span class="right_float" th:if="${!entry.finished and not (entry.progress > 99)}"
-                          th:text="${entry.progress}"/>
-                    <a class="right_float button" th:href="@{|/home/download?id=${entry.id}|}"
-                       th:if="${entry.finished and (entry.progress > 99)}"><span th:text="Download"/></a>
-                </th>
-                <th class="error_message" th:if="${entry.errorMessage}">
-                    <span class="error_message" th:if="${entry.errorMessage}" th:text="${entry.errorMessage}"/>
-                </th>
-            </tr>
-            <br/>
-        </table>
+                        <progress class="right_float" max="100" th:if="${!entry.finished and not (entry.progress > 99)}"
+                                  th:value="${entry.progress}"/>
+                        <a class="right_float button" th:href="@{|/home/download?id=${entry.id}|}"
+                           th:if="${entry.finished and (entry.progress > 99)}"><span th:text="Download"/></a>
+                    </th>
+                    <th class="error_message" th:if="${entry.errorMessage}">
+                        <span class="error_message" th:if="${entry.errorMessage}" th:text="${entry.errorMessage}"/>
+                    </th>
+                </tr>
+                <br/>
+            </table>
+        </div>
     </div>
-</div>
 
 </main>
-<script th:src="@{/public/js/main.js}" type="text/javascript"/>
+<script th:src="@{/public/js/main.js}" type="text/javascript"></script>
+<script th:src="@{/public/js/jquery-3.4.1.min.js}" type="text/javascript"></script>
+<script type="application/javascript">
+    if (!!window.EventSource) {
+        var eventSource = new EventSource("/event/update");
+
+        eventSource.onmessage = function (e) {
+            var message = JSON.parse(e.data);
+            console.log(message);
+            if (message == true) {
+                updateEntryList();
+            }
+        };
+
+        eventSource.onerror = function (e) {
+            if (e.readyState === EventSource.CONNECTING) {
+                console.log('event: CONNECTING');
+            } else if (e.readyState === EventSource.OPEN) {
+                console.log('event: OPEN');
+            } else if (e.readyState === EventSource.CLOSING) {
+                console.log('event: CLOSING');
+            } else if (e.readyState === EventSource.CLOSED) {
+                console.log('event: CLOSED');
+            }
+        };
+    } else {
+        alert('The browser does not support Server-Sent Events');
+    }
+</script>
 </body>
 </html>
