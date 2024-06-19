@@ -1,5 +1,7 @@
 # DEPRECATED
 This is no longer supported. You can use this fine tool: https://github.com/alexta69/metube
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 # youtube-dl web ui
 
 This project extends the youtube-dl (https://rg3.github.io/youtube-dl/) tool with a web ui for remote usage.
