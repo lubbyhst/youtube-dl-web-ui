@@ -1,3 +1,4 @@
+# DEPRECATED
 # youtube-dl web ui
 
 This project extends the youtube-dl (https://rg3.github.io/youtube-dl/) tool with a web ui for remote usage.
